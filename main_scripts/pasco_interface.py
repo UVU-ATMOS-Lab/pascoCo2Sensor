@@ -32,14 +32,17 @@ plt.rcParams["savefig.directory"] = str(plot_output_path)
 start_time = time.time()
 
 #Set the file name and output path for the CSV file
+data_dir = Path(__file__).resolve().parent.parent / "output" / "data"
+data_dir.mkdir(parents=True, exist_ok=True)
+
 file_name = "c02_live_data.csv"
-for item, i in enumerate(Path(__file__).resolve().parent.parent / "output" / "data".iterdir()):
-        if item.is_file():
-                if item.name == file_name:
-                        file_name = f"c02_live_data_({i+1}).csv"
-                        
-data_output_path = Path(__file__).resolve().parent.parent / "output" / "data" / file_name
-data_output_path.parent.mkdir(parents=True, exist_ok=True)
+data_output_path = data_dir / file_name
+i = 1
+
+while data_output_path.exists():
+    file_name = f"c02_live_data_({i}).csv"
+    data_output_path = data_dir / file_name
+    i += 1
 
 # Save data
 with open(data_output_path, "w", newline="") as file:
