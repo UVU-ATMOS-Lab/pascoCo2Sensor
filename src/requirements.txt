@@ -1,0 +1,3 @@
+Necessary External Libraries:
+- pasco
+- matplotlib
